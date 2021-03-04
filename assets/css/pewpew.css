@@ -1,4 +1,10 @@
-#pewPewCanvas{
-    background-image: url(/assets/img/grass.png);
-    background-size: contain;
+#pewPewCanvas {
+  background-image: url(/assets/img/grass.png);
+  background-size: contain;
+}
+#startMenu {
+  width: 850px;
+  height: 600px;
+  background-color: #5eb054;
+  text-align: center;
 }

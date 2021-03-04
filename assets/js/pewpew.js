@@ -64,10 +64,12 @@ let shootShell = (ctx) => {
                 eraseTarget(ctx);
                 hitTargets++;
                 localStorage.hitTargets = hitTargets;
+                showHitMenu(ctx);
                 if(hitTargets < 10){
                     let target = initTarget(ctx);
                 }else{
-                    ctx.clearRect(0,600,850,-150);
+                    // 10 targets hit - game over!                    
+                    endOfGame(ctx);
                 }                
             }
         }else{            
@@ -100,6 +102,8 @@ let drawTank = (ctx) => {
     return tank;
 }
 let initScene = (ctx) => {
+    document.getElementById("startMenu").style.display = "none";
+    document.getElementById("pewPewCanvas").style.display = "block";
     localStorage.setItem("lgTank",80);
     localStorage.setItem("htTank",50);
     localStorage.setItem("lgCannon",10);
@@ -123,6 +127,9 @@ let initScene = (ctx) => {
     localStorage.setItem("offsetShell",20 );
     let target = initTarget(ctx);
     localStorage.setItem("hitTargets",0);
+    localStorage.setItem("elapsedTime",0);
+    showHitMenu(ctx);
+    showTimeMenu(ctx);
 }
 let moveTank = (ctx,direction) => {
     let offset = lSNb("offsetTank");
@@ -171,22 +178,55 @@ let eraseTarget = (ctx) => {
     ctx.clearRect(posXTarget-rdTarget-5,0,rdTarget* 3,100);
 }
 let endOfGame = (ctx) => {
-    let newBtn = document.createElement("button");
-    document.getElementById("pewPewCanvas").appendChild(newBtn);
+    ctx.clearRect(0,600,850,-150);
+    localStorage.posXTank = 450;
+    localStorage.posYTank = 550;
+    localStorage.hitTargets = 0;
+    let tank = drawTank(ctx);
+    //let target = initTarget(ctx);
+    showStartMenu();
+}
+let showHitMenu = (ctx) => {
+    ctx.clearRect(1,1,50,100);
+    ctx.fillStyle = "black";
+    ctx.font = "18pt Calibri";
+    ctx.fillText("Hit", 10, 20);
+    ctx.fillStyle = "white";
+    ctx.fillText(localStorage.hitTargets,20,45);
+}
+let displayElapsedTime = (ctx) => {
+    let dspTime = lSNb("elapsedTime");
+    let dspString = "00 : 00";
+    return dspString;
+}
+let showTimeMenu = (ctx) => {
+    ctx.clearRect(760,1,90,100);
+    ctx.fillStyle = "black";
+    ctx.font = "18pt Calibri";
+    ctx.fillText("Time", 780, 20);
+    ctx.fillStyle = "white";
+    ctx.fillText(displayElapsedTime(ctx),770,45);
+}
+let showStartMenu = () => {
+    document.getElementById("pewPewCanvas").style.display = "none";
+    document.getElementById("startMenu").style.display = "block";
 }
 window.onload = function (){
     let ctx = document.getElementById("pewPewCanvas").getContext("2d");
-    initScene(ctx);
-    document.addEventListener('keydown', (event) => {
-        const keyName = event.key;
-        if((keyName === "ArrowLeft")||(keyName === "ArrowRight")){moveTank(ctx,keyName);}
-        if(keyName === " "){
-            let launched = localStorage.launched;
-            if(launched === "false"){
-                launched = "true";
-                localStorage.launched = launched;
-                let shell = shootShell(ctx);
+    showStartMenu();
+    document.getElementById("start").addEventListener("click", () => {
+        initScene(ctx);
+        document.addEventListener('keydown', (event) => {
+            const keyName = event.key;
+            if((keyName === "ArrowLeft")||(keyName === "ArrowRight")){moveTank(ctx,keyName);}
+            if(keyName === " "){
+                let launched = localStorage.launched;
+                if(launched === "false"){
+                    launched = "true";
+                    localStorage.launched = launched;
+                    let shell = shootShell(ctx);
+                }
             }
-        }
+        })
     })
 }
