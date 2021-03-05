@@ -75,7 +75,7 @@ main {
   text-align: right;
   color: white;
 }
-#yellowArrow {
+.yellowArrow {
   color: yellow;
   text-align: right;
   font-weight: bold;

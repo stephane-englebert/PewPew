@@ -138,7 +138,7 @@ let initScene = (ctx) => {
     localStorage.setItem("hitTargets",0);
     localStorage.setItem("elapsedTime",0);
     localStorage.setItem("gameOver",false);
-    localStorage.setItem("rankScores",[0,0,0,0,0]);
+    localStorage.setItem("rankGame",0);
     showInGameMenus(ctx);
 }
 let moveTank = (ctx,direction) => {
@@ -215,25 +215,15 @@ let eraseTarget = (ctx) => {
 let calculateScore = (ctx,elapsedTime,launchedShells) => {
     let basisScore = 1000;
     let bonus = (launchedShells < 16) ? 500 : 0;
-    console.log("bonus:"+bonus);
     let extraBonus = (launchedShells == 10) ? 2000 : 0;
-    console.log("extrabonus:"+extraBonus);
     let malus = (launchedShells > 20) ? -300 : 0;
-    console.log("malus:"+malus);
     let extraMalus = (launchedShells > 25) ? -500 : 0;
-    console.log("extra malus:"+extraMalus);
     let timeBonus = (elapsedTime < 60) ? 600 : 0;
-    console.log("time bonus:"+timeBonus);
     let medianTimeBonus = ((elapsedTime > 59)&&(elapsedTime < 91)) ? (elapsedTime-59)*10 : 0;
     let medianTimeBonus2 = ((elapsedTime < 60)&&(elapsedTime > 29)) ? (elapsedTime-29)*15 : 0;
-    console.log("median time bonus:"+medianTimeBonus);
-    console.log("median time bonus2:"+medianTimeBonus2);
     let extraTimeBonus = (elapsedTime < 30) ? 1500 : 0;
-    console.log("extra time bonus:"+extraTimeBonus);
     let timeMalus = (elapsedTime > 120) ? -200 : 0;
-    console.log("time malus"+timeMalus);
     let extraTimeMalus = (elapsedTime > 220) ? -500 : 0;
-    console.log("extra time malus"+extraTimeMalus);
     let scoreBonus = bonus + extraBonus;
     let scoreMalus = malus + extraMalus;
     let scoreTimeBonus = timeBonus + medianTimeBonus + medianTimeBonus2 + extraTimeBonus;
@@ -242,16 +232,40 @@ let calculateScore = (ctx,elapsedTime,launchedShells) => {
     showScore(ctx, elapsedTime, basisScore, scoreGame, scoreBonus, scoreMalus, scoreTimeBonus, scoreTimeMalus);
     return scoreGame;
 }
-let updateRanks = (ctx) => {
-
+let updateRanks = (ctx, scoreGame, elapsedTime) => {
+    let rankGame = 0;
+    let arrayRankScores = localStorage.rankScores.split(",");
+    let arrayRankTimes = localStorage.rankTimes.split(",");
+    let inserted = false;
+    for(let i=0; i<5; i++){
+        if((!inserted) && (scoreGame>parseInt(arrayRankScores[i]))){
+            inserted = true;
+            rankGame = i+1;
+            let j = 4;
+            while(j>i){
+                arrayRankScores[j] = arrayRankScores[j-1];
+                arrayRankTimes[j] = arrayRankTimes[j-1];
+                j--;
+            }
+            arrayRankScores[i] = scoreGame;
+            arrayRankTimes[i] = elapsedTime;
+        }
+    }
+    localStorage.rankGame = rankGame;
+    localStorage.rankScores = arrayRankScores;
+    localStorage.rankTimes = arrayRankTimes;
+    return rankGame;
 }
-let showScore = (ctx, elapsedTime, basisScore, scoreGame, scoreBonus, scoreMalus, scoreTimeBonus, scoreTimeMalus) => {
+let buildTimeString = (ctx, elapsedTime) => {
     let seconds = elapsedTime%60;
     let minutes = (elapsedTime - seconds) / 60;  
-    console.log("elap time="+elapsedTime+" / sec="+seconds+" / min="+minutes);
     let strMin = convertStrCounter(ctx,minutes);
     let strSec = convertStrCounter(ctx,seconds);
-    let dspString = strMin + ":" + strSec;    
+    let dspString = strMin + ":" + strSec; 
+    return dspString;
+}
+let showScore = (ctx, elapsedTime, basisScore, scoreGame, scoreBonus, scoreMalus, scoreTimeBonus, scoreTimeMalus) => {
+    let dspString = buildTimeString(ctx, elapsedTime);
     document.getElementById("timeElapsed").innerHTML = dspString;
     document.getElementById("basisScore").innerHTML = basisScore;
     document.getElementById("bonus").innerHTML = scoreBonus;
@@ -260,12 +274,30 @@ let showScore = (ctx, elapsedTime, basisScore, scoreGame, scoreBonus, scoreMalus
     document.getElementById("timeMalus").innerHTML = scoreTimeMalus;
     document.getElementById("scoreGame").innerHTML = scoreGame;
 }
-let showRanks = (ctx, scoreGame, elapsedTime) => {
-
+let showRanks = (ctx) => {
+    let rankGame = lSNb("rankGame");
+    let arrayRankScores = localStorage.rankScores.split(",");
+    let arrayRankTimes = localStorage.rankTimes.split(",");
+    document.getElementById("arrowRank1").innerHTML = "";
+    document.getElementById("arrowRank2").innerHTML = "";
+    document.getElementById("arrowRank3").innerHTML = "";
+    document.getElementById("arrowRank4").innerHTML = "";
+    document.getElementById("arrowRank5").innerHTML = "";
+    if(rankGame>0 && rankGame<6){document.getElementById("arrowRank"+rankGame).innerHTML = "-->";}
+    document.getElementById("scoreRank1").innerHTML = arrayRankScores[0];
+    document.getElementById("scoreRank2").innerHTML = arrayRankScores[1];
+    document.getElementById("scoreRank3").innerHTML = arrayRankScores[2];
+    document.getElementById("scoreRank4").innerHTML = arrayRankScores[3];
+    document.getElementById("scoreRank5").innerHTML = arrayRankScores[4];
+    document.getElementById("timeRank1").innerHTML = buildTimeString(ctx,arrayRankTimes[0]);
+    document.getElementById("timeRank2").innerHTML = buildTimeString(ctx,arrayRankTimes[1]);
+    document.getElementById("timeRank3").innerHTML = buildTimeString(ctx,arrayRankTimes[2]);
+    document.getElementById("timeRank4").innerHTML = buildTimeString(ctx,arrayRankTimes[3]);
+    document.getElementById("timeRank5").innerHTML = buildTimeString(ctx,arrayRankTimes[4]);
 }
 let showResults = (ctx, elapsedTime, launchedShells) => {
     let scoreGame = calculateScore(ctx,elapsedTime,launchedShells);
-    updateRanks(ctx, scoreGame, elapsedTime);
+    let rankGame = updateRanks(ctx, scoreGame, elapsedTime);
     showRanks(ctx);
 }
 let endOfGame = (ctx) => {
@@ -274,13 +306,11 @@ let endOfGame = (ctx) => {
     localStorage.posYTank = 550;
     localStorage.hitTargets = 0;
     let elapsedTime = lSNb("elapsedTime");
-    let launchedShells = lSNb("launchedShells");
-    
+    let launchedShells = lSNb("launchedShells");    
     showResults(ctx,elapsedTime,launchedShells);
     localStorage.elapsedTime = 0;
     localStorage.launchedShells = 0;
     let tank = drawTank(ctx);
-    //let target = initTarget(ctx);
     showStartMenu();
 }
 let showHitMenu = (ctx) => {
@@ -334,15 +364,16 @@ let showStartMenu = () => {
 window.onload = function (){
     let ctx = document.getElementById("pewPewCanvas").getContext("2d");
     showStartMenu();
+    localStorage.setItem("rankScores",[0,0,0,0,0]);
+    localStorage.setItem("rankTimes",[0,0,0,0,0]);
+    showRanks(ctx);
     document.getElementById("start").addEventListener("click", () => {
-        initScene(ctx);
+        initScene(ctx);        
         let clock = setInterval(function(){
             if(localStorage.gameOver == "true"){
                 //clearInterval(clock);
-                console.log("game over");
             }else{
                 showInGameMenus(ctx);
-                console.log("game running");
             }
         },1000);
         document.addEventListener('keydown', (event) => {
