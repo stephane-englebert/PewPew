@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Inconsolata:200,300,regular,500,600,700,800,900);
 @import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
 body {
   margin: auto;
@@ -10,7 +9,7 @@ main {
   margin: auto;
 }
 #pewPewCanvas {
-  background-image: url(/assets/img/grass.png);
+  background-image: url(assets/img/grass.png);
   background-size: contain;
 }
 #startMenu {
@@ -81,4 +80,18 @@ main {
   font-weight: bold;
   font-size: 2.2rem;
   font-family: "Architects Daughter", cursive;
+}
+#gameName {
+  color: white;
+  font-weight: bold;
+  font-family: "Architects Daughter", cursive;
+  font-size: 3.3rem;
+  text-align: left;
+}
+#gameNameVersion {
+  color: yellow;
+  font-weight: bold;
+  font-family: "Architects Daughter", cursive;
+  font-size: 2.8rem;
+  text-align: left;
 }
