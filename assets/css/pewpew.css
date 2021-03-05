@@ -9,7 +9,7 @@ main {
   margin: auto;
 }
 #pewPewCanvas {
-  background-image: url(assets/img/grass.png);
+  background-image: url(../img/grass.png);
   background-size: contain;
 }
 #startMenu {
