@@ -8,3 +8,24 @@
   background-color: #5eb054;
   text-align: center;
 }
+#results {
+  width: 300px;
+  height: 250px;
+  border: 1px solid red;
+}
+.rowBonus {
+  width: 300px;
+  border: 1px solid black;
+}
+.titleBonus {
+  width: 150px;
+  text-align: right;
+  color: black;
+  border: 1px solid blue;
+}
+.scoreBonus {
+  width: 150px;
+  text-align: left;
+  color: white;
+  border: 1px solid green;
+}
