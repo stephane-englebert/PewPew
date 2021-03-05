@@ -238,7 +238,7 @@ let calculateScore = (ctx,elapsedTime,launchedShells) => {
     let scoreMalus = malus + extraMalus;
     let scoreTimeBonus = timeBonus + medianTimeBonus + medianTimeBonus2 + extraTimeBonus;
     let scoreTimeMalus = timeMalus + extraTimeMalus;
-    let scoreGame = scoreBonus + scoreMalus + scoreTimeBonus + scoreTimeMalus;
+    let scoreGame = basisScore + scoreBonus + scoreMalus + scoreTimeBonus + scoreTimeMalus;
     showScore(ctx, elapsedTime, basisScore, scoreGame, scoreBonus, scoreMalus, scoreTimeBonus, scoreTimeMalus);
     return scoreGame;
 }

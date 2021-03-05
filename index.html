@@ -5,46 +5,156 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PewPew</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/pewpew.css">
 </head>
 <body>
     <main>
         <canvas id="pewPewCanvas" width="850" height="600" class=""></canvas>
-        <section id="startMenu">
-            <div id="results">
-                <div class="rowBonus">YOUR RESULTS</div>
-                <div class="rowBonus">
-                    <span class="titleBonus">Time elapsed</span>
-                    <span id="timeElapsed" class="scoreBonus"></span>
+        <section id="startMenu" class="row">
+            <div class="col-12 col-md-12 d-flex justify-content-center">
+                <div class="col-2 col-md-3"></div>
+                <div id="results" class="col-4 col-md-6">
+                    <div class="row rowBonus">
+                        <div class="col-2 col-md-4"></div>
+                        <div class="col-4 col-md-8 titleMenu">RESULTS</div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-4 col-md-8"></div>
+                        <div class="col-2 col-md-4 stripes">-</div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">Time elapsed</div>
+                            <div id="timeElapsed" class="scoreBonus col-4 col-md-4">00:00</div>
+                        </div>                
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">10 targets hit</div>
+                            <div id="basisScore" class="scoreBonus col-4 col-md-4">0</div>
+                        </div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">Shells bonus</div>
+                            <div id="bonus" class="scoreBonus col-4 col-md-4">0</div>
+                        </div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">Shells malus</div>
+                            <div id="malus" class="scoreBonus col-4 col-md-4">0</div>
+                        </div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">Time bonus</div>
+                            <div id="timeBonus" class="scoreBonus col-4 col-md-4">0</div>
+                        </div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">Time malus</div>
+                            <div id="timeMalus" class="scoreBonus col-4 col-md-4">0</div>
+                        </div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-4 col-md-8"></div>
+                        <div class="col-2 col-md-4">______</div>
+                    </div>
+                    <div class="row rowBonus">
+                        <div class="col-12 col-md-12">
+                            <div class="titleBonus col-8 col-md-8">FINAL SCORE</div>
+                            <div id="scoreGame" class="scoreBonus titleMenu col-4 col-md-4">0</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">10 targets hit</span>
-                    <span id="basisScore" class="scoreBonus"></span>
-                </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">Shells bonus</span>
-                    <span id="bonus" class="scoreBonus"></span>
-                </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">Shells malus</span>
-                    <span id="malus" class="scoreBonus"></span>
-                </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">Time bonus</span>
-                    <span id="timeBonus" class="scoreBonus"></span>
-                </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">Time malus</span>
-                    <span id="timeMalus" class="scoreBonus"></span>
-                </div>
-                <div class="rowBonus">
-                    <span class="titleBonus">FINAL SCORE</span>
-                    <span id="scoreGame" class="scoreBonus"></span>
+                <div class="col-2 col-md-3"></div>
+            </div>
+            <div class="col-12 col-md-12 d-flex justify-content-center">
+                <div class="col-2 col-md-3"></div>
+                <div id="results" class="col-4 col-md-6">
+                    <div class="row rowRanks">
+                        <div class="col-4 col-md-8"></div>
+                        <div class="col-2 col-md-4 stripes">-</div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-2 col-md-4"></div>
+                        <div class="col-4 col-md-8 titleMenu">RANKS</div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-4 col-md-8"></div>
+                        <div class="col-2 col-md-4 stripes">-</div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div class="titleRanks col-3 col-md-8">Score</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">Time</div>
+                        </div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div id="yellowArrow" class="col-1 col-md-4">--></div>
+                            <div class="col-1 col-md-1">1.</div>
+                            <div id="scoreRank1" class="scoreRanks col-6 col-md-3">2789</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">00:00</div>
+                        </div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div id="yellowArrow" class="col-1 col-md-4"></div>
+                            <div class="col-1 col-md-1">2.</div>
+                            <div id="scoreRank2" class="scoreRanks col-6 col-md-3">0</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">00:00</div>
+                        </div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div id="yellowArrow" class="col-1 col-md-4"></div>
+                            <div class="col-1 col-md-1">3.</div>
+                            <div id="scoreRank3" class="scoreRanks col-6 col-md-3">0</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">00:00</div>
+                        </div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div id="yellowArrow" class="col-1 col-md-4"></div>
+                            <div class="col-1 col-md-1">4.</div>
+                            <div id="scoreRank4" class="scoreRanks col-6 col-md-3">0</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">00:00</div>
+                        </div>
+                    </div>
+                    <div class="row rowRanks">
+                        <div class="col-12 col-md-12">
+                            <div id="yellowArrow" class="col-1 col-md-4"></div>
+                            <div class="col-1 col-md-1">5.</div>
+                            <div id="scoreRank5" class="scoreRanks col-6 col-md-3">0</div>
+                            <div id="timeElapsed" class="timeRanks col-4 col-md-3">00:00</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button id="start">Start</button>
-        </section>        
+            <div class="col-12 col-md-12 d-flex justify-content-center">
+                <div class="col-2 col-md-3"></div>
+                <div class="col-4 col-md-6">
+                    <div class="row">
+                        <div class="col-2 col-md-4"></div>
+                        <div class="col-4 col-md-8">
+                            <button id="start">Start</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 col-md-3"></div>
+            </div> 
+        </section>    
+        
+        <section id="ranksMenu" class="row">
+
+        </section>
     </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/assets/js/pewpew.js"></script>
 </body>
 </html>

@@ -1,3 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Inconsolata:200,300,regular,500,600,700,800,900);
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
+body {
+  margin: auto;
+  background-color: #41613f;
+}
+main {
+  width: 66%;
+  height: auto;
+  margin: auto;
+}
 #pewPewCanvas {
   background-image: url(/assets/img/grass.png);
   background-size: contain;
@@ -5,27 +16,69 @@
 #startMenu {
   width: 850px;
   height: 600px;
+  margin: auto;
+  padding: 30px;
   background-color: #5eb054;
   text-align: center;
+  font-family: "Architects Daughter", cursive;
 }
 #results {
-  width: 300px;
-  height: 250px;
-  border: 1px solid red;
+  font-family: "Architects Daughter", cursive;
+  font-size: 2.2rem;
 }
 .rowBonus {
-  width: 300px;
-  border: 1px solid black;
+  line-height: 2.5rem;
 }
 .titleBonus {
-  width: 150px;
   text-align: right;
   color: black;
-  border: 1px solid blue;
 }
 .scoreBonus {
-  width: 150px;
-  text-align: left;
+  text-align: right;
   color: white;
-  border: 1px solid green;
+}
+.titleMenu {
+  color: yellow;
+  font-weight: bold;
+  font-family: "Architects Daughter", cursive;
+}
+.stripes {
+  color: #5eb054;
+}
+#start {
+  margin: 20px;
+  padding: 8px 15px 8px 15px;
+  background-color: #363d35;
+  border-color: #41613f;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 2.2rem;
+  font-family: "Architects Daughter", cursive;
+}
+#start:hover {
+  background-color: #41613f;
+  color: yellow;
+}
+.rowRanks {
+  line-height: 2.5rem;
+}
+.titleRanks {
+  text-align: right;
+  color: black;
+}
+.scoreRanks {
+  text-align: right;
+  color: black;
+}
+.timeRanks {
+  text-align: right;
+  color: white;
+}
+#yellowArrow {
+  color: yellow;
+  text-align: right;
+  font-weight: bold;
+  font-size: 2.2rem;
+  font-family: "Architects Daughter", cursive;
 }
